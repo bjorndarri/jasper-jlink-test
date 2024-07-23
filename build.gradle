@@ -1,0 +1,50 @@
+plugins {
+    id "application"
+    id "org.beryx.jlink" version "3.0.1"
+    id "org.gradlex.extra-java-module-info" version "1.8"
+    id "io.github.f-cramer.jasperreports" version "0.0.1"
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+dependencies {
+    implementation ("net.sf.jasperreports:jasperreports:7.0.0") {
+        exclude group: "org.apache.xmlgraphics"
+        exclude group: "xml-apis"
+    }
+    implementation ("net.sf.jasperreports:jasperreports-pdf:7.0.0") {
+        exclude group: "net.sf.jasperreports"
+    }
+    compileOnly ("net.sf.jasperreports:jasperreports-jdt:7.0.0") {
+        exclude group: "net.sf.jasperreports"
+    }
+}
+
+extraJavaModuleInfo {
+    automaticModule("net.sf.jasperreports:jasperreports", "jasperreports")
+    automaticModule("net.sf.jasperreports:jasperreports-pdf", "jasperreports.pdf")
+    automaticModule("net.sf.jasperreports:jasperreports-jdt", "jasperreports.jdt")
+    automaticModule("com.adobe.xmp:xmpcore", "xmpcore")
+    automaticModule("org.eclipse.jdt:ecj", "org.eclipse.jdt.ecj")
+    automaticModule("commons-beanutils:commons-beanutils", "commons.beanutils")
+    automaticModule("commons-collections:commons-collections", "commons.collections")
+}
+
+application {
+    getMainModule().set("is.test.jasper")
+    getMainClass().set("is.test.jasper.Test")
+}
+
+jasperreports {
+    classpath.from(project.sourceSets.main.getCompileClasspath())
+}
+
+sourceSets.main.resources.srcDir(compileAllReports)
