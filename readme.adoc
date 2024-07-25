@@ -1,0 +1,28 @@
+= JasperReports Split Package Example
+
+== Run
+
+[source]
+----
+gradlew run
+
+Error occurred during initialization of boot layer
+java.lang.LayerInstantiationException: Package net.sf.jasperreports.fonts in both module jasperreports.fonts and module jasperreports
+----
+
+== jlink image
+
+=== Create
+
+[source]
+----
+gradlew jlink
+----
+
+=== Run
+
+[source]
+----
+cd build/image/bin
+./jasper-jlink-test
+----
