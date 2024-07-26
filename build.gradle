@@ -19,7 +19,9 @@ dependencies {
         exclude group: "org.apache.xmlgraphics"
         exclude group: "xml-apis"
     }
-    implementation("net.sf.jasperreports:jasperreports-fonts:7.0.0")
+    implementation("net.sf.jasperreports:jasperreports-pdf:7.0.0") {
+        exclude group: "net.sf.jasperreports"
+    }
 }
 
 extraJavaModuleInfo {
@@ -31,12 +33,14 @@ extraJavaModuleInfo {
         requires("org.apache.commons.collections4")
     }
 
-    module("net.sf.jasperreports:jasperreports-fonts", "jasperreports.fonts") {
+    module("net.sf.jasperreports:jasperreports-pdf", "jasperreports.pdf") {
         exportAllPackages()
+        requires("jasperreports")
     }
 
     automaticModule("commons-beanutils:commons-beanutils", "commons.beanutils")
     automaticModule("commons-collections:commons-collections", "commons.collections")
+    automaticModule("com.adobe.xmp:xmpcore", "xmpcore")
 }
 
 application {
